@@ -1,0 +1,36 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "模块描述"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "mainPage",
+      "value": "首页"
+    },
+    {
+      "name": "qa",
+      "value": "问答"
+    },
+    {
+      "name": "blog",
+      "value": "公众号"
+    },
+    {
+      "name": "project",
+      "value": "项目"
+    },
+    {
+      "name": "me",
+      "value": "我"
+    }
+  ]
+}

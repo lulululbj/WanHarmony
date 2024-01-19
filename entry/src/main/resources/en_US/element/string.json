@@ -1,0 +1,36 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "label"
+    },
+    {
+      "name": "mainPage",
+      "value": "Home"
+    },
+    {
+      "name": "qa",
+      "value": "QA"
+    },
+    {
+      "name": "blog",
+      "value": "Blog"
+    },
+    {
+      "name": "project",
+      "value": "Project"
+    },
+    {
+      "name": "me",
+      "value": "Me"
+    }
+  ]
+}
