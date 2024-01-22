@@ -1,6 +1,5 @@
 import router from '@ohos.router'
 import webview from '@ohos.web.webview'
-import prompt from '@ohos.prompt'
 import { ArticleEntity } from '../model/entity/ArticleEntity'
 import Log from '../utils/Log'
 import { TitleComponent } from './TitleComponent'

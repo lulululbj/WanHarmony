@@ -1,5 +1,7 @@
 import { TestPage } from '../TestPage'
 import { HotPage } from './HotPage'
+import { NavPage } from './NavPage'
+import { SquarePage } from './SquarePage'
 
 @Component
 export struct HomePage {
@@ -18,9 +20,10 @@ export struct HomePage {
         }, (item: string) => item)
       }
       .barMode(BarMode.Scrollable)
-      .animationDuration(300)
       .onChange((index: number) => {
-        this.currentTabIndex = index
+        animateTo({ duration: 280 }, () => {
+          this.currentTabIndex = index
+        })
       }).layoutWeight(1)
     }
     .width('100%')
@@ -46,6 +49,10 @@ export struct HomePage {
   homePageTabContentBuilder(index: number) {
     if (index == 0) {
       HotPage()
+    } else if (index == 1) {
+      SquarePage()
+    } else if (index == 3) {
+      NavPage()
     } else {
       TestPage()
     }
