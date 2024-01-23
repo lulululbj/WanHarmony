@@ -4,6 +4,12 @@
 
 ![img.png](img.png)
 
+## 安装命令
+
+```
+ohpm install @luyao/flowlayout
+```
+
 ## 使用说明
 
 ```ArkTs

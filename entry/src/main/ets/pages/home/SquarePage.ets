@@ -1,9 +1,9 @@
 import { ArticleEntity } from '../../model/entity/ArticleEntity';
-import { ArticleView } from '../ArticleView'
-import { PullToRefresh } from '@ohos/pulltorefresh'
-import router from '@ohos.router';
+import { ArticleView } from '../ArticleView';
+import { PullToRefresh } from '@ohos/pulltorefresh';
 import Log from '../../utils/Log';
 import { getSquareArticleList } from '../../viewmodel/Net';
+import { jumpToWeb } from '../../utils/Common';
 
 @Component
 export struct SquarePage {
@@ -45,10 +45,7 @@ export struct SquarePage {
 
             ArticleView({ article: item })
               .onClick(() => {
-                router.pushUrl({
-                  url: 'pages/WebPage',
-                  params: item
-                }, router.RouterMode.Single)
+                jumpToWeb(item)
               })
           }
         }

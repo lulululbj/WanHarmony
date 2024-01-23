@@ -6,6 +6,7 @@ import { ArticleEntity } from '../../model/entity/ArticleEntity'
 import { ArticleView } from '../ArticleView'
 import { PullToRefresh } from '@ohos/pulltorefresh'
 import router from '@ohos.router'
+import { jumpToWeb } from '../../utils/Common'
 
 @Component
 export struct HotPage {
@@ -43,6 +44,7 @@ export struct HotPage {
       ListItem() {
         Banner({ bannerList: this.bannerList })
       }
+
       ForEach(this.articleList, (item: ArticleEntity) => {
         ListItem() {
           Column() {
@@ -52,10 +54,7 @@ export struct HotPage {
 
             ArticleView({ article: item })
               .onClick(() => {
-                router.pushUrl({
-                  url: 'pages/WebPage',
-                  params: item
-                }, router.RouterMode.Single)
+                jumpToWeb(item)
               })
           }
         }

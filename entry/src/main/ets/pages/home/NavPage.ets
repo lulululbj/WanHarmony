@@ -3,6 +3,7 @@ import { ArticleEntity } from '../../model/entity/ArticleEntity'
 import { NavData } from '../../model/entity/NavData'
 import { getNavigationData } from '../../viewmodel/Net'
 import { FlowLayout, FlowLayoutConfig } from '@luyao/flowlayout'
+import { jumpToWeb } from '../../utils/Common'
 
 @Component
 export struct NavPage {
@@ -92,10 +93,7 @@ export struct NavPage {
                 .setItemMargin(4)
                 .setItemBorderRadius(12),
               clickListener: (index: number) => {
-                router.pushUrl({
-                  url: 'pages/WebPage',
-                  params: item.articles[index]
-                }, router.RouterMode.Single)
+                jumpToWeb(item.articles[index])
               }
             })
           }

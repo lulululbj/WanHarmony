@@ -5,6 +5,7 @@ import { ArticleEntity } from '../model/entity/ArticleEntity';
 import { PageData } from '../model/entity/PageData';
 import { NavData } from '../model/entity/NavData';
 import Log from '../utils/Log';
+import { TutorialEntity } from '../model/entity/TutorialEntity';
 
 
 export const DOMAIN = 0x0001
@@ -25,6 +26,8 @@ export function getBanner(): Promise<BannerEntity[]> {
       .then((res: AxiosResponse<WanResponse<BannerEntity[]>>) => {
         if (res.data.errorCode == 0) {
           resolve(res.data.data)
+        } else {
+          reject(new Error(res.statusText))
         }
       }).catch((err: AxiosError) => {
       reject(err)
@@ -41,6 +44,8 @@ export function getArticleList(pageNumber: number): Promise<ArticleEntity[]> {
       .then((res: AxiosResponse<WanResponse<PageData<ArticleEntity>>>) => {
         if (res.data.errorCode == 0) {
           resolve(res.data.data.datas)
+        } else {
+          reject(new Error(res.statusText))
         }
       }).catch((err: AxiosError) => {
       reject(err)
@@ -60,6 +65,8 @@ export function getTopArticleList(): Promise<ArticleEntity[]> {
             value.top = true
             return value
           }))
+        } else {
+          reject(new Error(res.statusText))
         }
       }).catch((err: AxiosError) => {
       reject(err)
@@ -77,6 +84,8 @@ export function getSquareArticleList(pageNumber: number): Promise<ArticleEntity[
         if (res.data.errorCode == 0) {
           Log.error("getSquareArticleList success")
           resolve(res.data.data.datas)
+        } else {
+          reject(new Error(res.statusText))
         }
       }).catch((err: AxiosError) => {
       reject(err)
@@ -92,10 +101,52 @@ export function getNavigationData(): Promise<NavData[]> {
         Log.error("getNavigationData success")
         if (res.data.errorCode == 0) {
           resolve(res.data.data)
+        } else {
+          reject(new Error(res.statusText))
         }
       }).catch((err: Error) => {
       Log.error("getNavigationData failed: " + err.message)
       reject(err)
     })
+  })
+}
+
+/*
+ * 获取教程目录
+ */
+export function getTutorialData(): Promise<TutorialEntity[]> {
+  return new Promise((resolve, reject) => {
+    axiosInstance.get<WanResponse<TutorialEntity[]>, AxiosResponse<WanResponse<TutorialEntity[]>>, null>('/chapter/547/sublist/json')
+      .then((res: AxiosResponse<WanResponse<TutorialEntity[]>>) => {
+        if (res.data.errorCode == 0) {
+          resolve(res.data.data)
+        } else {
+          reject(new Error(res.statusText))
+        }
+      })
+      .catch((err: Error) => {
+        Log.error("getTutorialData failed: " + err.message)
+        reject(err)
+      })
+  })
+}
+
+/**
+ * 获取单个教程的内容目录
+ */
+export function getTutorialDetailData(tutorialId: number): Promise<ArticleEntity[]> {
+  return new Promise((resolve, reject) => {
+    axiosInstance.get<WanResponse<PageData<ArticleEntity>>, AxiosResponse<WanResponse<PageData<ArticleEntity>>>, null>(`/article/list/0/json?cid=${tutorialId}&order_type=1`)
+      .then((res: AxiosResponse<WanResponse<PageData<ArticleEntity>>>) => {
+        if (res.data.errorCode == 0) {
+          resolve(res.data.data.datas)
+        } else {
+          reject(new Error(res.statusText))
+        }
+      })
+      .catch((err: Error) => {
+        Log.error("getTutorialData failed: " + err.message)
+        reject(err)
+      })
   })
 }

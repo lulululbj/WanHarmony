@@ -1,21 +1,38 @@
+import {
+  MenuEntity,
+  MENU_HOT,
+  MENU_LEARN_ROUTE,
+  MENU_NAV,
+  MENU_SQUARE,
+  MENU_TUTORIAL,
+  MENU_UTIL
+} from '../../model/entity/MenuEntity'
 import { TestPage } from '../TestPage'
 import { HotPage } from './HotPage'
 import { NavPage } from './NavPage'
 import { SquarePage } from './SquarePage'
+import { TutorialPage } from './TutorialPage'
 
 @Component
 export struct HomePage {
   @State currentTabIndex: number = 0
   private tabsController: TabsController = new TabsController()
-  private menus = ['热门', '广场', '学习路线', '导航', '教程', '工具']
+  private menus = [
+    new MenuEntity(MENU_HOT, "热门"),
+    new MenuEntity(MENU_SQUARE, "广场"),
+    new MenuEntity(MENU_NAV, "导航"),
+    new MenuEntity(MENU_TUTORIAL, "教程"),
+    new MenuEntity(MENU_UTIL, "工具"),
+    new MenuEntity(MENU_LEARN_ROUTE, "学习路线"),
+  ]
 
   build() {
     Column() {
       SearchBar()
       Tabs({ barPosition: BarPosition.Start, index: this.currentTabIndex, controller: this.tabsController }) {
-        ForEach(this.menus, (item: string, index: number) => {
+        ForEach(this.menus, (item: MenuEntity, index: number) => {
           TabContent() {
-            this.homePageTabContentBuilder(index)
+            this.homePageTabContentBuilder(item.id)
           }.tabBar(this.tabBuilder(index))
         }, (item: string) => item)
       }
@@ -33,7 +50,7 @@ export struct HomePage {
   @Builder
   tabBuilder(index: number) {
     Column() {
-      Text(this.menus[index])
+      Text(this.menus[index].name)
         .fontColor(this.currentTabIndex == index ? $r('app.color.black') : $r('app.color.color_999999'))
         .fontSize(16)
         .margin({ bottom: 6 })
@@ -46,13 +63,15 @@ export struct HomePage {
   }
 
   @Builder
-  homePageTabContentBuilder(index: number) {
-    if (index == 0) {
+  homePageTabContentBuilder(id: string) {
+    if (id == MENU_HOT) {
       HotPage()
-    } else if (index == 1) {
+    } else if (id == MENU_SQUARE) {
       SquarePage()
-    } else if (index == 3) {
+    } else if (id == MENU_NAV) {
       NavPage()
+    } else if (id == MENU_TUTORIAL) {
+      TutorialPage()
     } else {
       TestPage()
     }
