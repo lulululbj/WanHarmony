@@ -137,11 +137,3 @@ struct Banner {
     .visibility(this.bannerList.length > 0 ? Visibility.Visible : Visibility.Hidden)
   }
 }
-
-@Preview
-@Component
-struct PreviewHomePage {
-  build() {
-    HotPage()
-  }
-}
