@@ -30,6 +30,10 @@
           ]
         }
       ]
+    },
+    {
+      "name": "flowlayout",
+      "srcPath": "./flowlayout"
     }
   ]
 }

@@ -9,5 +9,6 @@
   "dependencies": {
     "@ohos/axios": "2.1.1",
     "@ohos/pulltorefresh": "2.0.1",
+    "@luyao/flowlayout": "file:../flowlayout"
   }
 }

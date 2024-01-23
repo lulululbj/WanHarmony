@@ -1,0 +1,11 @@
+{
+  "name": "@luyao/flowlayout",
+  "version": "1.0.0",
+  "description": "Flow Tag Layout on HarmonyOS PlatForm",
+  "keywords": ['flowlayout','tag'],
+  "main": "Index.ets",
+  "author": "luyao",
+  "homepage": "https://github.com/lulululbj/WanHarmony",
+  "license": "Apache-2.0",
+  "dependencies": {}
+}

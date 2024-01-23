@@ -2,6 +2,7 @@ import router from '@ohos.router'
 import { ArticleEntity } from '../../model/entity/ArticleEntity'
 import { NavData } from '../../model/entity/NavData'
 import { getNavigationData } from '../../viewmodel/Net'
+import { FlowLayout, FlowLayoutConfig } from '@luyao/flowlayout'
 
 @Component
 export struct NavPage {
@@ -18,15 +19,16 @@ export struct NavPage {
 
   build() {
     Row() {
-      List({scroller: this.leftScroller}) {
-        ForEach(this.navData, (item: NavData,index: number) => {
+      List({ scroller: this.leftScroller }) {
+        ForEach(this.navData, (item: NavData, index: number) => {
           ListItem() {
             Text(item.name)
               .fontColor(Color.Black)
+              .fontSize(16)
               .height(30)
               .borderRadius(12)
               .backgroundColor($r('app.color.color_f2f3f5'))
-              .padding({ left: 6, right: 6, top: 4, bottom: 4 })
+              .padding({ left: 8, right: 8, top: 6, bottom: 6 })
               .onClick(() => {
                 this.rightScroller.scrollToIndex(index)
               })
@@ -47,34 +49,35 @@ export struct NavPage {
         .height('100%')
         .backgroundColor(Color.Grey)
 
-      List({scroller: this.rightScroller}) {
-        ForEach(this.navData, (item: NavData) => {
-
+      List({ scroller: this.rightScroller }) {
+        ForEach(this.navData, (item: NavData, index: number) => {
           ListItem() {
             Column() {
               Text(item.name)
                 .fontSize(20)
                 .padding({ top: 8, bottom: 8 })
 
-              Flex({ wrap: FlexWrap.Wrap }) {
-                ForEach(item.articles, (item: ArticleEntity) => {
-                  Text(item.title)
-                    .fontColor(Color.Black)
-                    .height(30)
-                    .borderRadius(12)
-                    .backgroundColor($r('app.color.color_f2f3f5'))
-                    .padding({ left: 6, right: 6, top: 4, bottom: 4 })
-                    .margin(4)
-                    .onClick(() => {
-                      router.pushUrl({
-                        url: 'pages/WebPage',
-                        params: item
-                      }, router.RouterMode.Single)
-                    })
-                }, (item: ArticleEntity) => {
-                  return item.id + ""
-                })
-              }
+              FlowLayout({
+                data: item.articles.map((it: ArticleEntity) => {
+                  return it.title
+                }),
+                flowLayoutConfig: new FlowLayoutConfig()
+                  .setItemFontSize(16)
+                  .setItemNormalFontColor(Color.Black)
+                  .setItemSelectedFontColor(Color.White)
+                  .setItemHeight(30)
+                  .setItemNormalBgColor($r('app.color.color_f2f3f5'))
+                  .setItemSelectedBgColor(Color.Green)
+                  .setItemPadding({ left: 6, right: 6, top: 4, bottom: 4 })
+                  .setItemMargin(4)
+                  .setItemBorderRadius(12),
+                clickListener: (index: number) => {
+                  router.pushUrl({
+                    url: 'pages/WebPage',
+                    params: item.articles[index]
+                  }, router.RouterMode.Single)
+                }
+              })
             }
             .alignItems(HorizontalAlign.Start)
           }.margin({ top: 4, bottom: 4 })
