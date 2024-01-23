@@ -12,6 +12,7 @@ import { HotPage } from './HotPage'
 import { NavPage } from './NavPage'
 import { SquarePage } from './SquarePage'
 import { TutorialPage } from './TutorialPage'
+import { UtilPage } from './UtilPage'
 
 @Component
 export struct HomePage {
@@ -72,6 +73,8 @@ export struct HomePage {
       NavPage()
     } else if (id == MENU_TUTORIAL) {
       TutorialPage()
+    } else if (id == MENU_UTIL) {
+      UtilPage()
     } else {
       TestPage()
     }

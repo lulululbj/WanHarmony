@@ -4,8 +4,9 @@ import { ArticleEntity } from '../model/entity/ArticleEntity'
 import Log from '../utils/Log'
 import { TitleComponent } from './TitleComponent'
 import promptAction from '@ohos.promptAction'
+import { WebParam } from '../model/entity/WebParam'
 
-const articleItem = router.getParams() as ArticleEntity
+const webParam = router.getParams() as WebParam
 
 @Entry
 @Component
@@ -18,17 +19,17 @@ struct WebPage {
 
   build() {
     Column() {
-      TitleComponent({ title: articleItem.title, back: () => {
+      TitleComponent({ title: webParam.title, back: () => {
         if (this.controller.accessBackward()) {
           this.controller.backward()
         } else {
           router.back()
         }
       } })
-      Web({ src: articleItem.link, controller: this.controller })
+      Web({ src: webParam.url, controller: this.controller })
         .javaScriptAccess(true)
         .onPageEnd(() => {
-          Log.info(`onPageEnd: ${articleItem.link}`)
+          Log.info(`onPageEnd: ${webParam.url}`)
         })
         .onErrorReceive((event) => {
           promptAction.showToast({

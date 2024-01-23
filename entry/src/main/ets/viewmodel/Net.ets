@@ -6,6 +6,7 @@ import { PageData } from '../model/entity/PageData';
 import { NavData } from '../model/entity/NavData';
 import Log from '../utils/Log';
 import { TutorialEntity } from '../model/entity/TutorialEntity';
+import { UtilEntity } from '../model/entity/UtilEntity';
 
 
 export const DOMAIN = 0x0001
@@ -93,7 +94,9 @@ export function getSquareArticleList(pageNumber: number): Promise<ArticleEntity[
   })
 }
 
-
+/**
+ * 获取导航数据
+ */
 export function getNavigationData(): Promise<NavData[]> {
   return new Promise((resolve, reject) => {
     axiosInstance.get<WanResponse<NavData[]>, AxiosResponse<WanResponse<NavData[]>>, null>('/navi/json')
@@ -148,5 +151,22 @@ export function getTutorialDetailData(tutorialId: number): Promise<ArticleEntity
         Log.error("getTutorialData failed: " + err.message)
         reject(err)
       })
+  })
+}
+
+export function getUtilData(): Promise<UtilEntity[]> {
+  return new Promise((resolve, reject) => {
+      axiosInstance.get<WanResponse<UtilEntity[]>, AxiosResponse<WanResponse<UtilEntity[]>>,null>('/tools/list/json')
+        .then((res: AxiosResponse<WanResponse<UtilEntity[]>>) => {
+          if (res.data.errorCode == 0) {
+            resolve(res.data.data)
+          } else {
+            reject(new Error(res.statusText))
+          }
+        })
+        .catch((err: Error) => {
+          Log.error("getUtilData failed: " + err.message)
+          reject(err)
+        })
   })
 }
