@@ -20,17 +20,6 @@ export const axiosInstance = axios.create({
  * 获取 Banner 数据
  */
 export function getBanner(): Promise<BannerEntity[]> {
-  // let context = getContext(this)
-  // context.resourceManager.getRawFileContent("banner.json", (err, value) => {
-  //   let decoder = util.TextDecoder.create("utf-8")
-  //   let string = decoder.decodeWithStream(value, { stream: false })
-  //   hilog.info(DOMAIN, TAG, string)
-  //   let response = <WanResponse<BannerEntity[]>> JSON.parse(string)
-  //   hilog.info(DOMAIN, TAG, `${response.errorCode} ${response.data.length}`)
-  //   if (response.errorCode == 0) {
-  //     callback(response.data)
-  //   }
-  // })
   return new Promise((resolve, reject) => {
     axiosInstance.get<WanResponse<BannerEntity[]>, AxiosResponse<WanResponse<BannerEntity[]>>, null>('/banner/json')
       .then((res: AxiosResponse<WanResponse<BannerEntity[]>>) => {
