@@ -190,6 +190,10 @@ export function getQAList(pageNumber: number): Promise<ArticleEntity[]> {
   })
 }
 
+/**
+ * 获取问题回答列表
+ * @param id 问题 id
+ */
 export function getQACommentList(id: number): Promise<QaCommentEntity[]> {
   return new Promise((resolve, reject) => {
     axiosInstance.get<WanResponse<PageData<QaCommentEntity>>, AxiosResponse<WanResponse<PageData<QaCommentEntity>>>, null>(`/wenda/comments/${id}/json`)
@@ -200,6 +204,48 @@ export function getQACommentList(id: number): Promise<QaCommentEntity[]> {
           reject(new Error(res.statusText))
         }
       }).catch((err: AxiosError) => {
+      reject(err)
+    })
+  })
+}
+
+/**
+ * 公众号作者列表
+ */
+export function getBlogData(): Promise<TutorialEntity[]> {
+  return new Promise((resolve, reject) => {
+    axiosInstance.get<WanResponse<TutorialEntity[]>, AxiosResponse<WanResponse<TutorialEntity[]>>, null>('/wxarticle/chapters/json')
+      .then((res: AxiosResponse<WanResponse<TutorialEntity[]>>) => {
+        if (res.data.errorCode == 0) {
+          resolve(res.data.data)
+        } else {
+          reject(new Error(res.statusText))
+        }
+      })
+      .catch((err: Error) => {
+        Log.error("getBlogData failed: " + err.message)
+        reject(err)
+      })
+  })
+}
+
+/**
+ * 指定公众号的文章列表  wxarticle/list/408/1/json
+ */
+/**
+ * 获取广场文章列表
+ */
+export function getBlogArticleList(id: number, pageNumber: number): Promise<ArticleEntity[]> {
+  return new Promise((resolve, reject) => {
+    axiosInstance.get<WanResponse<PageData<ArticleEntity>>, AxiosResponse<WanResponse<PageData<ArticleEntity>>>, null>(`/wxarticle/list/${id}/${pageNumber}/json`)
+      .then((res: AxiosResponse<WanResponse<PageData<ArticleEntity>>>) => {
+        if (res.data.errorCode == 0) {
+          resolve(res.data.data.datas)
+        } else {
+          reject(new Error(res.statusText))
+        }
+      }).catch((err: AxiosError) => {
+      Log.error("getBlogArticleList error: " + err)
       reject(err)
     })
   })
