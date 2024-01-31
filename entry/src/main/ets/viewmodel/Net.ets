@@ -7,6 +7,7 @@ import { NavData } from '../model/entity/NavData';
 import Log from '../utils/Log';
 import { TutorialEntity } from '../model/entity/TutorialEntity';
 import { UtilEntity } from '../model/entity/UtilEntity';
+import { QaCommentEntity } from '../model/entity/QaCommnetEntity';
 
 
 export const DOMAIN = 0x0001
@@ -156,17 +157,50 @@ export function getTutorialDetailData(tutorialId: number): Promise<ArticleEntity
 
 export function getUtilData(): Promise<UtilEntity[]> {
   return new Promise((resolve, reject) => {
-      axiosInstance.get<WanResponse<UtilEntity[]>, AxiosResponse<WanResponse<UtilEntity[]>>,null>('/tools/list/json')
-        .then((res: AxiosResponse<WanResponse<UtilEntity[]>>) => {
-          if (res.data.errorCode == 0) {
-            resolve(res.data.data)
-          } else {
-            reject(new Error(res.statusText))
-          }
-        })
-        .catch((err: Error) => {
-          Log.error("getUtilData failed: " + err.message)
-          reject(err)
-        })
+    axiosInstance.get<WanResponse<UtilEntity[]>, AxiosResponse<WanResponse<UtilEntity[]>>, null>('/tools/list/json')
+      .then((res: AxiosResponse<WanResponse<UtilEntity[]>>) => {
+        if (res.data.errorCode == 0) {
+          resolve(res.data.data)
+        } else {
+          reject(new Error(res.statusText))
+        }
+      })
+      .catch((err: Error) => {
+        Log.error("getUtilData failed: " + err.message)
+        reject(err)
+      })
+  })
+}
+
+/**
+ * 获取问答列表
+ */
+export function getQAList(pageNumber: number): Promise<ArticleEntity[]> {
+  return new Promise((resolve, reject) => {
+    axiosInstance.get<WanResponse<PageData<ArticleEntity>>, AxiosResponse<WanResponse<PageData<ArticleEntity>>>, null>(`/wenda/list/${pageNumber}/json`)
+      .then((res: AxiosResponse<WanResponse<PageData<ArticleEntity>>>) => {
+        if (res.data.errorCode == 0) {
+          resolve(res.data.data.datas)
+        } else {
+          reject(new Error(res.statusText))
+        }
+      }).catch((err: AxiosError) => {
+      reject(err)
+    })
+  })
+}
+
+export function getQACommentList(id: number): Promise<QaCommentEntity[]> {
+  return new Promise((resolve, reject) => {
+    axiosInstance.get<WanResponse<PageData<QaCommentEntity>>, AxiosResponse<WanResponse<PageData<QaCommentEntity>>>, null>(`/wenda/comments/${id}/json`)
+      .then((res: AxiosResponse<WanResponse<PageData<QaCommentEntity>>>) => {
+        if (res.data.errorCode == 0) {
+          resolve(res.data.data.datas)
+        } else {
+          reject(new Error(res.statusText))
+        }
+      }).catch((err: AxiosError) => {
+      reject(err)
+    })
   })
 }

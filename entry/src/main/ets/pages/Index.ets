@@ -3,7 +3,7 @@ import { BlogPage } from './BlogPage'
 import { HomePage } from './home/HomePage'
 import { MyPage } from './MyPage'
 import { ProjectPage } from './ProjectPage'
-import { QaPage } from './QaPage'
+import { QaPage } from './qa/QaPage'
 
 @Entry
 @Component
