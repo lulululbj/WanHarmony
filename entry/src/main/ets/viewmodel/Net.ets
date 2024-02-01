@@ -232,12 +232,71 @@ export function getBlogData(): Promise<TutorialEntity[]> {
 /**
  * 指定公众号的文章列表  wxarticle/list/408/1/json
  */
-/**
- * 获取广场文章列表
- */
 export function getBlogArticleList(id: number, pageNumber: number): Promise<ArticleEntity[]> {
   return new Promise((resolve, reject) => {
     axiosInstance.get<WanResponse<PageData<ArticleEntity>>, AxiosResponse<WanResponse<PageData<ArticleEntity>>>, null>(`/wxarticle/list/${id}/${pageNumber}/json`)
+      .then((res: AxiosResponse<WanResponse<PageData<ArticleEntity>>>) => {
+        if (res.data.errorCode == 0) {
+          resolve(res.data.data.datas)
+        } else {
+          reject(new Error(res.statusText))
+        }
+      }).catch((err: AxiosError) => {
+      Log.error("getBlogArticleList error: " + err)
+      reject(err)
+    })
+  })
+}
+
+/**
+ * 项目分类列表
+ */
+export function getProjectTypeList(): Promise<TutorialEntity[]> {
+  return new Promise((resolve, reject) => {
+    axiosInstance.get<WanResponse<TutorialEntity[]>, AxiosResponse<WanResponse<TutorialEntity[]>>, null>('/project/tree/json')
+      .then((res: AxiosResponse<WanResponse<TutorialEntity[]>>) => {
+        if (res.data.errorCode == 0) {
+          resolve(res.data.data)
+        } else {
+          reject(new Error(res.statusText))
+        }
+      })
+      .catch((err: Error) => {
+        Log.error("getBlogData failed: " + err.message)
+        reject(err)
+      })
+  })
+}
+
+/**
+ * 获取最新项目列表
+ * @param page 从 0 开始
+ */
+export function getNewestProjectList(pageNumber: number) {
+  return new Promise((resolve, reject) => {
+    axiosInstance.get<WanResponse<PageData<ArticleEntity>>, AxiosResponse<WanResponse<PageData<ArticleEntity>>>, null>(`/article/listproject/${pageNumber}/json`)
+      .then((res: AxiosResponse<WanResponse<PageData<ArticleEntity>>>) => {
+        if (res.data.errorCode == 0) {
+          resolve(res.data.data.datas)
+        } else {
+          reject(new Error(res.statusText))
+        }
+      }).catch((err: AxiosError) => {
+      Log.error("getBlogArticleList error: " + err)
+      reject(err)
+    })
+  })
+}
+
+/**
+ * 项目列表数据
+ * @param cid 项目分类
+ * @param pageNumber 从 1 开始
+ * @returns
+ */
+export function getProjectList(cid: number, pageNumber: number): Promise<ArticleEntity[]> {
+  return new Promise((resolve, reject) => {
+    axiosInstance.get<WanResponse<PageData<ArticleEntity>>, AxiosResponse<WanResponse<PageData<ArticleEntity>>>, null>(`/project/list/${pageNumber}/json?cid=${cid}`)
       .then((res: AxiosResponse<WanResponse<PageData<ArticleEntity>>>) => {
         if (res.data.errorCode == 0) {
           resolve(res.data.data.datas)

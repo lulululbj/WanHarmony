@@ -2,7 +2,7 @@ import { TabMenu, TabMenuList } from '../model/TabMenu'
 import { BlogPage } from './blog/BlogPage'
 import { HomePage } from './home/HomePage'
 import { MyPage } from './MyPage'
-import { ProjectPage } from './ProjectPage'
+import { ProjectPage } from './project/ProjectPage'
 import { QaPage } from './qa/QaPage'
 
 @Entry
