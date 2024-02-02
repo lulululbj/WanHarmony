@@ -3,6 +3,7 @@
     "pages/Index",
     "pages/WebPage",
     "pages/home/TutorialDetailPage",
-    "pages/qa/QaDetailPage"
+    "pages/qa/QaDetailPage",
+    "pages/login/LoginPage"
   ]
 }
